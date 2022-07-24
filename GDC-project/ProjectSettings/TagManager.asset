@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Exploding
+  - Enemy
+  - PointHandler
   layers:
   - Default
   - TransparentFX

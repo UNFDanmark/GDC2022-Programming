@@ -16,14 +16,17 @@ public class BulletScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Set variabel start værdier
         spawnTime = Time.time;
+        rb = gameObject.GetComponent<Rigidbody>();
+
+        //ignorer collision mellem spiller og skud
         Physics.IgnoreLayerCollision(6, 7, true);
         Physics.IgnoreLayerCollision(7, 7, true);
-        rb = gameObject.GetComponent<Rigidbody>();
+        
+        // Skyd bullet afsted
         rb.AddForce(transform.forward * bulletSpeed);
 
-
-  //      transform = gameObject.GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -39,14 +42,26 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+
+        bool isEnemy = other.gameObject.tag == "Enemy";
+        if (isEnemy)
+        {
+            Destroy(other.gameObject);
+        }
+
+
+        FindAllExplodables();
+    }
+
+    void FindAllExplodables()
+    {
         Vector3 explosionOrigin = transform.position;
         Collider[] objectsHit = Physics.OverlapSphere(explosionOrigin, explosionRadius);
 
-        foreach(Collider currentcollider in objectsHit)
+        foreach (Collider currentcollider in objectsHit)
         {
             Explosion(currentcollider);
         }
-        
     }
 
     void Explosion(Collider other)
