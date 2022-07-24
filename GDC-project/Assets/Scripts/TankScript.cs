@@ -40,6 +40,8 @@ public class TankScript : MonoBehaviour
             Instantiate(bullet, transform.position,transform.rotation);
             lastShotTime = Time.time;
         }
+
+        
     }
 
     void MoveHandler()

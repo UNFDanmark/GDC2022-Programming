@@ -162,3 +162,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 3
   bulletSpeed: 2000
+  explosionForceMultiplier: 10000
+  explosionRadius: 5
