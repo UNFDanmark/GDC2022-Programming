@@ -9,10 +9,14 @@ public class TankScript : MonoBehaviour
     public float jumpForce = 1;
     public GameObject bullet;
     public float shotCooldownTime = 3;
+    public GameObject tankModel;
+
 
     float lastShotTime;
     bool isGrounded;
     Rigidbody rb;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +52,17 @@ public class TankScript : MonoBehaviour
     {
         float moveInput = Input.GetAxis("Vertical");//Variable for move input
         float turnInput = Input.GetAxis("Horizontal");
+        bool isMoving = moveInput != 0;
+        bool isTurning = turnInput != 0;
+        if (isMoving || isTurning)
+        {
+            Animator tankAnimator = tankModel.GetComponent<Animator>();
+            tankAnimator.SetBool("isDriving", true);
+        } else
+        {
+            Animator tankAnimator = tankModel.GetComponent<Animator>();
+            tankAnimator.SetBool("isDriving", false);
+        }
 
         float moveSpeed = speed * moveInput;
 
