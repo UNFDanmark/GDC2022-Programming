@@ -10,6 +10,8 @@ public class TankScript : MonoBehaviour
     public GameObject bullet;
     public float shotCooldownTime = 3;
     public GameObject tankModel;
+    public AudioClip shootSoundClip;
+    public AudioClip jumpSoundClip;
 
 
     float lastShotTime;
@@ -41,11 +43,17 @@ public class TankScript : MonoBehaviour
 
         if (wantsToShoot && canShoot)
         {
-            Instantiate(bullet, transform.position,transform.rotation);
+            Instantiate(bullet, transform.position+Vector3.up*0.2f,transform.rotation);
             lastShotTime = Time.time;
+
+            Animator tankAnimator = tankModel.GetComponent<Animator>();
+            tankAnimator.SetTrigger("isShooting");
+
+            AudioSource soundSource = gameObject.GetComponent<AudioSource>();
+            soundSource.PlayOneShot(shootSoundClip);
         }
 
-        
+
     }
 
     void MoveHandler()
@@ -75,6 +83,9 @@ public class TankScript : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce);
             isGrounded = false;
+
+            AudioSource soundSource = gameObject.GetComponent<AudioSource>();
+            soundSource.PlayOneShot(jumpSoundClip);
         }
 
         gameObject.GetComponent<Transform>().Rotate(Vector3.up * turnInput * turnSpeed); // Rotates the tank around Y-axis
