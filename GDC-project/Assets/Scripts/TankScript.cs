@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TankScript : MonoBehaviour
 {
@@ -12,19 +14,21 @@ public class TankScript : MonoBehaviour
     public GameObject tankModel;
     public AudioClip shootSoundClip;
     public AudioClip jumpSoundClip;
-
+    public int maxHealth = 3;
+    public GameObject healthBar;
 
     float lastShotTime;
     bool isGrounded;
     Rigidbody rb;
-
-
+    int currentHealth;
 
     // Start is called before the first frame update
     void Start()
     {
         lastShotTime = Time.time - shotCooldownTime;
         rb = gameObject.GetComponent<Rigidbody>();
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -98,6 +102,18 @@ public class TankScript : MonoBehaviour
         if(other.gameObject.tag == "Ground")
         {
             isGrounded = true;
+        }
+    }
+
+    public void Attack(int damage)
+    {
+        currentHealth = currentHealth - damage;
+
+        Image healthUIImage = healthBar.GetComponent<Image>();
+        healthUIImage.fillAmount = (float)currentHealth/ (float)maxHealth;
+
+        if (currentHealth == 0) {
+            SceneManager.LoadScene("SampleScene");
         }
     }
 }

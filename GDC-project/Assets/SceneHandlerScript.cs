@@ -14,6 +14,11 @@ public class SceneHandlerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckForSceneRestart();
+    }
+
+    void CheckForSceneRestart()
+    {
         if (Input.GetButtonDown("Cancel"))
         {
             SceneManager.LoadScene("SampleScene");

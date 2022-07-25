@@ -37,4 +37,14 @@ public class EnemyScript : MonoBehaviour
 
 
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            GameObject tankPlayer = collision.gameObject;
+            TankScript tankComponent = tankPlayer.GetComponent<TankScript>();
+            tankComponent.Attack(1);
+        }
+    }
 }
